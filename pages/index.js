@@ -9,12 +9,14 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Create Next App</title>
+        <title>CodeCouture - Style the code</title> 
         <meta name="description" content="CodeCouture - Style the code" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>      
-    
+      <div className="mx-4">
+        This is me
+      </div>
     </div>
   );
 }
