@@ -11,12 +11,12 @@ export default function App({ Component, pageProps }) {
     try {
       if(localStorage.getItem("cart")){
         setCart(JSON.parse(localStorage.getItem("cart")))
+        saveCart(JSON.parse(localStorage.getItem("cart")))
       }
     } catch (error) {
       console.error(error)
       localStorage.clear()
     }
-    
   },[])
   const saveCart = (myCart) =>{
     if (typeof window !== 'undefined') {
@@ -41,10 +41,12 @@ export default function App({ Component, pageProps }) {
     setCart(newCart)
     saveCart(newCart)
   }
+  
   const clearCart = () =>{
-    setCart({})
-    saveCart({})
-    console.log("Cart has been cleared")
+    let emptyCart = {}
+    setCart(emptyCart)
+    saveCart(emptyCart)
+    
   }
   
   const removeFromCart = (itemCode,qty,price,name,size,variant) =>{
@@ -59,7 +61,7 @@ export default function App({ Component, pageProps }) {
     saveCart(newCart)
   }
   return <>
-    <Navbar cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal}/>
+    <Navbar key={subTotal} cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal}/>
     <Component cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />
     <Footer /></>
 }
