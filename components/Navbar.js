@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React, { useRef } from 'react'
 import { AiOutlineShoppingCart, AiFillCloseCircle, AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 import { BsFillBagCheckFill } from "react-icons/bs";
-const Navbar = ({ cart, addToCart, removeFromCart, clearCart,subTotal }) => {
+const Navbar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
   // console.log(cart,addToCart,removeFromCart,clearCart,subTotal)
   const toggleCart = () => {
     if (ref.current.classList.contains('translate-x-full')) {
@@ -32,7 +32,7 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart,subTotal }) => {
       <div onClick={toggleCart} className="cart cursor-pointer absolute right-0 top-4 mx-5">
         <AiOutlineShoppingCart className='text-xl md:text-2xl' />
       </div>
-      <div ref={ref} className={`w-72 h-[100vh] sideCart absolute top-0 right-0 bg-pink-100 px-8 py-10 transform transition-transform ${Object.keys(cart).length !== 0 ? 'translate-x-0' : 'translate-x-full' }`}>
+      <div ref={ref} className={`w-72 h-[100vh] sideCart absolute top-0 right-0 bg-pink-100 px-8 py-10 transform transition-transform ${Object.keys(cart).length !== 0 ? 'translate-x-0' : 'translate-x-full'}`}>
         <h2 className='font-bold text-xl text-center'>Shopping Cart</h2>
         <span onClick={toggleCart} className="absolute top-5 right-2 cursor-pointer text-2xl text-pink-500"><AiFillCloseCircle /></span>
         <ol className='list-decimal font-semibold'>
@@ -45,8 +45,6 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart,subTotal }) => {
               </div>
             </li>
           })}
-
-
         </ol>
         <div className="font-bold my-2">SubTotal : ₹{subTotal}</div>
         <div className="flex">
