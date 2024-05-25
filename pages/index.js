@@ -12,7 +12,7 @@ export default function Home() {
         <title>CodeCouture - Style the code</title> 
         <meta name="description" content="CodeCouture - Style the code" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/logo.png" />
       </Head>      
       
       <div className="">

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React, { useRef } from 'react'
 import { AiOutlineShoppingCart, AiFillCloseCircle, AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 import { BsFillBagCheckFill } from "react-icons/bs";
+import { MdAccountCircle } from "react-icons/md";
 const Navbar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
   // console.log(cart,addToCart,removeFromCart,clearCart,subTotal)
   const toggleCart = () => {
@@ -29,8 +30,9 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
           <Link href={'/mugs'} legacyBehavior><a><li>Mugs</li></a></Link>
         </ul>
       </div>
-      <div onClick={toggleCart} className="cart cursor-pointer absolute right-0 top-4 mx-5">
-        <AiOutlineShoppingCart className='text-xl md:text-2xl' />
+      <div className="cart cursor-pointer absolute right-0 top-4 mx-5 flex">
+      <Link href={'/login'}> <MdAccountCircle className='text-xl md:text-2xl mx-2'/></Link>
+        <AiOutlineShoppingCart onClick={toggleCart}  className='text-xl md:text-2xl' />
       </div>
       <div ref={ref} className={`w-72 h-[100vh] sideCart absolute top-0 right-0 bg-pink-100 px-8 py-10 transform transition-transform ${Object.keys(cart).length !== 0 ? 'translate-x-0' : 'translate-x-full'}`}>
         <h2 className='font-bold text-xl text-center'>Shopping Cart</h2>
