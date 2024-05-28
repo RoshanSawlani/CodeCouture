@@ -31,7 +31,7 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
         </ul>
       </div>
       <div className="cart cursor-pointer absolute right-0 top-4 mx-5 flex">
-      <Link href={'/login'}> <MdAccountCircle className='text-xl md:text-2xl mx-2'/></Link>
+      <Link href={'/login'} legacyBehavior><a> <MdAccountCircle className='text-xl md:text-2xl mx-2'/></a></Link>
         <AiOutlineShoppingCart onClick={toggleCart}  className='text-xl md:text-2xl' />
       </div>
       <div ref={ref} className={`w-72 h-[100vh] sideCart absolute top-0 right-0 bg-pink-100 px-8 py-10 transform transition-transform ${Object.keys(cart).length !== 0 ? 'translate-x-0' : 'translate-x-full'}`}>
