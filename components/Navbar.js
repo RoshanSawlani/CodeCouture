@@ -24,10 +24,10 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
       </div>
       <div className="nav">
         <ul className='flex items-center space-x-4 font-bold md:text-md'>
-          <Link href={'/tshirts'} legacyBehavior><a><li>Tshirts</li></a></Link>
-          <Link href={'/hoodies'} legacyBehavior><a><li>Hoodies</li></a></Link>
-          <Link href={'/stickers'} legacyBehavior><a><li>Stickers</li></a></Link>
-          <Link href={'/mugs'} legacyBehavior><a><li>Mugs</li></a></Link>
+          <Link href={'/tshirts'} legacyBehavior><a><li className='hover:text-pink-600'>Tshirts</li></a></Link>
+          <Link href={'/hoodies'} legacyBehavior><a><li className='hover:text-pink-600'>Hoodies</li></a></Link>
+          <Link href={'/stickers'} legacyBehavior><a><li className='hover:text-pink-600'>Stickers</li></a></Link>
+          <Link href={'/mugs'} legacyBehavior><a><li className='hover:text-pink-600'>Mugs</li></a></Link>
         </ul>
       </div>
       <div className="cart cursor-pointer absolute right-0 top-4 mx-5 flex">
@@ -42,7 +42,7 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
           {Object.keys(cart).map((k) => {
             return <li key={k}>
               <div className="item flex my-5">
-                <div className='w-2/3 font-semibold'>{cart[k].name}</div>
+                <div className='w-2/3 font-semibold'>{cart[k].name}({cart[k].size}/{cart[k].variant})</div>
                 <div className='flex font-semibold items-center justify-center w-1/3 text-lg'><AiFillMinusCircle onClick={() => { removeFromCart(k, 1, cart[k].price, cart[k].name, cart[k].size, cart[k].variant) }} className='cursor-pointer text-pink-500' /><span className="mx-2 text-sm">{cart[k].qty}</span><AiFillPlusCircle onClick={() => { addToCart(k, 1, cart[k].price, cart[k].name, cart[k].size, cart[k].variant) }} className='cursor-pointer text-pink-500' /></div>
               </div>
             </li>
