@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function App({ Component, pageProps }) {
   const [cart, setCart] = useState({})
@@ -41,6 +42,7 @@ export default function App({ Component, pageProps }) {
     else{
       newCart[itemCode] = {qty:1,price,name,size,variant}
     }
+    toast.success("Item added to cart")
     setCart(newCart)
     saveCart(newCart)
   }
@@ -55,6 +57,7 @@ export default function App({ Component, pageProps }) {
     let emptyCart = {}
     setCart(emptyCart)
     saveCart(emptyCart)
+    toast.success("Cart Cleared")
     
   }
   
@@ -66,6 +69,7 @@ export default function App({ Component, pageProps }) {
     if (newCart[itemCode]["qty"] <=0){
       delete newCart[itemCode]
     }
+    toast.success("Item removed from cart")
     setCart(newCart)
     saveCart(newCart)
   }
