@@ -1,8 +1,11 @@
 import Link from 'next/link'
 import React, { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
+import { useRouter } from 'next/router';
+
 
 const Signup = () => {
+  const router = useRouter()
   const [name, setName] = useState()
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
@@ -36,6 +39,9 @@ const Signup = () => {
       setName("")
       setPassword("")
       toast.success("Your account has been created")
+      setTimeout(()=>{
+        router.push('/login')
+      },1000)
     }
     return (
       <div>
