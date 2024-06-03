@@ -34,6 +34,7 @@ const Login = () => {
     setEmail("")
     setPassword("")
     if(response.success) {
+      localStorage.setItem('token',response.token)
       toast.success("Your are successfully logged in!")
       setTimeout(()=>{
         router.push('http://localhost:3004')
