@@ -1,10 +1,13 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { AiOutlineShoppingCart, AiFillCloseCircle, AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { MdAccountCircle } from "react-icons/md";
-const Navbar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
+
+
+const Navbar = ({logout, user, cart, addToCart, removeFromCart, clearCart, subTotal }) => {
+  const [dropdown,setDropdown] = useState(false)
   // console.log(cart,addToCart,removeFromCart,clearCart,subTotal)
   const toggleCart = () => {
     if (ref.current.classList.contains('translate-x-full')) {
@@ -19,7 +22,7 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
   const ref = useRef()
   return (
     <div className='flex flex-col md:flex-row md:justify-start justify-center items-center py-2 shadow-md sticky top-0 bg-white z-10'>
-      <div className="logo mx-5">
+      <div className="logo mr-auto md:mx-5">
         <Link href={'/'} legacyBehavior><a><Image src="/logo.png" width={50} height={40} alt="logo" /></a></Link>
       </div>
       <div className="nav">
@@ -30,10 +33,21 @@ const Navbar = ({ cart, addToCart, removeFromCart, clearCart, subTotal }) => {
           <Link href={'/mugs'} legacyBehavior><a><li className='hover:text-pink-600'>Mugs</li></a></Link>
         </ul>
       </div>
-      <div className="cart cursor-pointer absolute right-0 top-4 mx-5 flex">
-      <Link href={'/login'} legacyBehavior><a> <MdAccountCircle className='text-xl md:text-2xl mx-2'/></a></Link>
+      <div className="cart items-center cursor-pointer absolute right-0 top-4 mx-5 flex">
+        <a onMouseOver={()=>{setDropdown(true)}} onMouseLeave={()=>{setDropdown(false)}}>
+      {dropdown && <div onMouseOver={()=>{setDropdown(true)}} onMouseLeave={()=>{setDropdown(false)}} className="absolute right-8 bg-pink-300 top-6 py-4 rounded-md px-5 w-32">
+        <ul>
+          <Link href={'/myaccount'} legacyBehavior><a><li className='py-1 hover:text-pink-700 text-sm font-bold'>My Account</li></a></Link>
+          <Link href={'/orders'} legacyBehavior><a><li className='py-1 hover:text-pink-700 text-sm font-bold'>Orders</li></a></Link>
+          <li onClick={logout} className='py-1 hover:text-pink-700 text-sm font-bold'>Logout</li>
+        </ul>
+      </div>}
+      {user.value && <MdAccountCircle className='text-xl md:text-2xl mx-2'/>}
+      </a>
+      {!user.value && <Link href={'/login'} legacyBehavior><a><button className='bg-pink-600 px-2 py-1 rounded-md text-sm text-white mx-2'>Login</button></a></Link>}
         <AiOutlineShoppingCart onClick={toggleCart}  className='text-xl md:text-2xl' />
       </div>
+      
       <div ref={ref} className={`w-72 h-[100vh] sideCart overflow-y-scroll absolute top-0 right-0 bg-pink-100 px-8 py-10 transform transition-transform ${Object.keys(cart).length !== 0 ? 'translate-x-0' : 'translate-x-full'}`}>
         <h2 className='font-bold text-xl text-center'>Shopping Cart</h2>
         <span onClick={toggleCart} className="absolute top-5 right-2 cursor-pointer text-2xl text-pink-500"><AiFillCloseCircle /></span>
