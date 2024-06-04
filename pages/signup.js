@@ -1,10 +1,15 @@
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
 
 
 const Signup = () => {
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      router.push('/')
+    }
+  },[])
   const router = useRouter()
   const [name, setName] = useState()
   const [email, setEmail] = useState()

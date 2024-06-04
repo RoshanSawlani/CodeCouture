@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast';
 import { useRouter } from 'next/router';
 
@@ -8,6 +8,12 @@ const Login = () => {
   const router = useRouter()
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
+
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      router.push('/')
+    }
+  },[])
 
   const handleChange = (e) => {
     if (e.target.name === 'email') {

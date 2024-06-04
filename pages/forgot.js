@@ -1,7 +1,14 @@
 import Link from 'next/link'
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useEffect } from 'react'
 
-const Login = () => {
+const Forgot = () => {
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      router.push('/')
+    }
+  },[])
+  const router = useRouter()
   return (
     <div>
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -32,4 +39,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Forgot
