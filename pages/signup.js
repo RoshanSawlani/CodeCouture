@@ -11,9 +11,9 @@ const Signup = () => {
     }
   },[])
   const router = useRouter()
-  const [name, setName] = useState()
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
   const handleChange = (e) => {
     if (e.target.name === 'name') {
@@ -29,7 +29,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
       e.preventDefault()
       const data = { name, email, password }
-      let res = await fetch("http://localhost:3004/api/signup", {
+      let res = await fetch(`${process.env.HOST}/api/signup`, {
         method: "POST", // or 'PUT'
         headers: {
           "Content-Type": "application/json",

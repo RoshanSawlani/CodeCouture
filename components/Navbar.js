@@ -34,7 +34,7 @@ const Navbar = ({logout, user, cart, addToCart, removeFromCart, clearCart, subTo
         </ul>
       </div>
       <div className="cart items-center cursor-pointer absolute right-0 top-4 mx-5 flex">
-        <a onMouseOver={()=>{setDropdown(true)}} onMouseLeave={()=>{setDropdown(false)}}>
+        <span onMouseOver={()=>{setDropdown(true)}} onMouseLeave={()=>{setDropdown(false)}}>
       {dropdown && <div onMouseOver={()=>{setDropdown(true)}} onMouseLeave={()=>{setDropdown(false)}} className="absolute right-8 bg-white shadow-lg border top-6 py-4 rounded-md px-5 w-32">
         <ul>
           <Link href={'/myaccount'} legacyBehavior><a><li className='py-1 hover:text-pink-700 text-sm font-bold'>My Account</li></a></Link>
@@ -43,7 +43,7 @@ const Navbar = ({logout, user, cart, addToCart, removeFromCart, clearCart, subTo
         </ul>
       </div>}
       {user.value && <MdAccountCircle className='text-xl md:text-2xl mx-2'/>}
-      </a>
+      </span>
       {!user.value && <Link href={'/login'} legacyBehavior><a><button className='bg-pink-600 px-2 py-1 rounded-md text-sm text-white mx-2'>Login</button></a></Link>}
         <AiOutlineShoppingCart onClick={toggleCart}  className='text-xl md:text-2xl' />
       </div>
