@@ -5,16 +5,15 @@ import Product from '@/models/Product'
 import toast, { Toaster } from 'react-hot-toast';
 
 const Post = ({ addToCart, buyNow, product, variants }) => {
-    console.log(product, variants)
     const router = useRouter()
     const { slug } = router.query
     const [pin, setPin] = useState()
     const [service, setService] = useState()
 
     const checkServiceability = async () => {
-        let pins = await fetch(`${process.env.HOST}/api/pincode`)
+        let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`)
         let pinJson = await pins.json()
-        if (pinJson.includes(parseInt(pin))) {
+        if (Object.keys(pinJson).includes((pin))) {
             setService(true)
             toast.success("Your Pincode is Serviceable")
         } else {

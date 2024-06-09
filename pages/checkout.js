@@ -4,6 +4,7 @@ import { BsFillBagCheckFill } from "react-icons/bs";
 import Link from 'next/link'
 import Head from 'next/head'
 import Script from 'next/script';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Checkout = ({ cart, subTotal, addToCart, removeFromCart }) => {
   const [name, setName] = useState('')
@@ -15,7 +16,8 @@ const Checkout = ({ cart, subTotal, addToCart, removeFromCart }) => {
   const [city,setCity] = useState('')
   const [state, setState] = useState('')
 
-  const handleChange = (e) => {
+  const handleChange = async(e) => {
+    
     if (e.target.name === "name") {
       setName(e.target.value)
     }
@@ -30,15 +32,29 @@ const Checkout = ({ cart, subTotal, addToCart, removeFromCart }) => {
     }
     else if (e.target.name === 'pincode') {
       setPincode(e.target.value)
+      if(e.target.value.length == 6){
+        let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`)
+        let pinJson = await pins.json()
+        if(Object.keys(pinJson).includes(e.target.value)){
+          setState(pinJson[e.target.value][1])
+          setCity(pinJson[e.target.value][0])
+        }
+        else{
+          setState('')
+          setCity('')
+        }
+          }
+        else{
+          setState('')
+          setCity('')
+        }
     }
-    setTimeout(() => {
       if (name.length > 3 && email.length > 3 && phone.length > 3 && address.length > 3 && pincode.length > 3) {
         setDisabled(false)
       }
       else {
         setDisabled(true)
       }
-    }, 100)
 
   }
   const initiatePayment = async () => {
@@ -54,7 +70,8 @@ const Checkout = ({ cart, subTotal, addToCart, removeFromCart }) => {
     })
 
     let txnRes = await a.json()
-    console.log(txnRes)
+    // console.log(txnRes)
+    if(txnRes.success){
     let txnToken = txnRes.txnToken
 
     var config = {
@@ -74,15 +91,21 @@ const Checkout = ({ cart, subTotal, addToCart, removeFromCart }) => {
         }
       }
     };
-
+    
     window.Paytm.CheckoutJS.init(config).then(function onSuccess() {
       window.Paytm.CheckoutJS.invoke();
     }).catch(function onError(error) {
       console.log("error => ", error);
     });
   }
+  else{
+    console.log(txnRes.error)
+    toast.error(txnRes.error)
+  }
+  }
   return (
     <div className='container px-2 sm:m-auto'>
+    <Toaster/>
       <Head><meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" /></Head>
       <Script type='application/javascript' crossOrigin='anonymous' src={`${process.env.NEXT_PUBLIC_PAYTM_HOST}/merchantpgui/checkoutjs/merchants/${process.env.NEXT_PUBLIC_PAYTM_MID}.js`}></Script>
       <h1 className='font-bold text-3xl my-8 text-center'>Checkout</h1>
@@ -125,13 +148,13 @@ const Checkout = ({ cart, subTotal, addToCart, removeFromCart }) => {
         <div className="px-2 w-1/2">
           <div className="mb-4">
             <label htmlFor="state" className="leading-7 text-sm text-gray-600">State</label>
-            <input value={state} type="text" id="state" name="state" className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly={true}/>
+            <input onChange={handleChange} value={state} type="text" id="state" name="state" className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
           </div>
         </div>
         <div className="px-2 w-1/2">
           <div className="mb-4">
             <label htmlFor="city" className="leading-7 text-sm text-gray-600">City</label>
-            <input value={city} type="text" id="city" name="city" className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" readOnly={true}/>
+            <input onChange={handleChange} value={city} type="text" id="city" name="city" className="w-full bg-white rounded border border-gray-300 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"/>
           </div>
         </div>
       </div>
