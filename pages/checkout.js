@@ -25,6 +25,15 @@ const Checkout = ({ cart, clearCart, subTotal, addToCart, removeFromCart }) => {
     }
   },[])
 
+  useEffect(()=>{
+    if (name.length > 3 && email.length > 3 && phone.length > 3 && address.length > 3 && pincode.length > 3) {
+      setDisabled(false)
+    }
+    else {
+      setDisabled(true)
+    }
+  },[name,email,phone,pincode,address])
+
   const handleChange = async(e) => {
     
     if (e.target.name === "name") {
@@ -58,13 +67,7 @@ const Checkout = ({ cart, clearCart, subTotal, addToCart, removeFromCart }) => {
           setCity('')
         }
     }
-      if (name.length > 3 && email.length > 3 && phone.length > 3 && address.length > 3 && pincode.length > 3) {
-        setDisabled(false)
-      }
-      else {
-        setDisabled(true)
-      }
-
+      
   }
   const initiatePayment = async () => {
     let oid = Math.floor(Math.random() * Date.now())
