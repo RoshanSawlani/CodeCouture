@@ -18,10 +18,11 @@ const Checkout = ({ cart, clearCart, subTotal, addToCart, removeFromCart }) => {
   const [user,setUser] = useState({value:null})
 
   useEffect(()=>{
-    const user = JSON.parse(localStorage.getItem("myuser"))
-    if(user && user.token){
-      setUser(user)
-      setEmail(user.email)
+    const myuser = JSON.parse(localStorage.getItem("myuser"))
+    if(myuser && myuser.token){
+      setUser(myuser)
+      setEmail(myuser.email)
+      fetchData(myuser.token)
     }
   },[])
 
@@ -33,6 +34,37 @@ const Checkout = ({ cart, clearCart, subTotal, addToCart, removeFromCart }) => {
       setDisabled(true)
     }
   },[name,email,phone,pincode,address])
+
+  const fetchData = async(token)=>{
+    let data = {token:token}
+    let a = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/getuser`, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+    let res = await a.json()
+    setName(res.name)
+    setAddress(res.address)
+    setPincode(res.pincode)
+    setPhone(res.phone)
+    getPinCode(res.pincode)
+    } 
+
+    const getPinCode = async(pin) =>{
+      let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`)
+        let pinJson = await pins.json()
+        if(Object.keys(pinJson).includes(pin)){
+          setState(pinJson[pin][1])
+          setCity(pinJson[pin][0])
+        }
+        else{
+          setState('')
+          setCity('')
+        } 
+    }
+
 
   const handleChange = async(e) => {
     
@@ -51,16 +83,7 @@ const Checkout = ({ cart, clearCart, subTotal, addToCart, removeFromCart }) => {
     else if (e.target.name === 'pincode') {
       setPincode(e.target.value)
       if(e.target.value.length == 6){
-        let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`)
-        let pinJson = await pins.json()
-        if(Object.keys(pinJson).includes(e.target.value)){
-          setState(pinJson[e.target.value][1])
-          setCity(pinJson[e.target.value][0])
-        }
-        else{
-          setState('')
-          setCity('')
-        }
+        getPinCode(e.target.value)
           }
         else{
           setState('')
