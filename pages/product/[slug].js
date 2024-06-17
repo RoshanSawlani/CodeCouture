@@ -48,7 +48,7 @@ const Post = ({ addToCart, buyNow, product, variants, error }) => {
 
 
     return <>
-        <section className="text-gray-600 body-font overflow-hidden">
+        <section className="text-gray-600 body-font overflow-hidden min-h-screen">
             <Toaster />
             <div className="container px-5 py-16 mx-auto">
                 <div className="lg:w-4/5 mx-auto flex flex-wrap">

@@ -142,9 +142,11 @@ const Checkout = ({ cart, clearCart, subTotal, addToCart, removeFromCart }) => {
   }
   }
   return (
-    <div className='container px-2 sm:m-auto'>
+    <div className='container px-2 sm:m-auto min-h-screen'>
     <Toaster/>
-      <Head><meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" /></Head>
+      <Head>
+        <title>Checkout - CodeCouture</title>
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" /></Head>
       <Script type='application/javascript' crossOrigin='anonymous' src={`${process.env.NEXT_PUBLIC_PAYTM_HOST}/merchantpgui/checkoutjs/merchants/${process.env.NEXT_PUBLIC_PAYTM_MID}.js`}></Script>
       <h1 className='font-bold text-3xl my-8 text-center'>Checkout</h1>
       <h2 className='font-semibold text-xl'>Delivery Details</h2>
